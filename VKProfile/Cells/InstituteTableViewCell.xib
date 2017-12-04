@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="instituteCell" rowHeight="166" id="KGk-i7-Jjw" customClass="InstituteTableViewCell" customModule="VKProfile" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="165.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вуз" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zit-Fv-qPC">
+                        <rect key="frame" x="8" y="8" width="23" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZQ-yb-Jc8">
+                        <rect key="frame" x="8" y="32" width="304" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Direction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9E-NQ-Ds6">
+                        <rect key="frame" x="8" y="54" width="69" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Department" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUV-oU-bfS">
+                        <rect key="frame" x="8" y="120" width="92" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type of studying" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pi3-Ds-vjc">
+                        <rect key="frame" x="8" y="142" width="128" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Pi3-Ds-vjc" secondAttribute="bottom" constant="2.5" id="KvJ-dA-cgM"/>
+                    <constraint firstAttribute="trailing" secondItem="aZQ-yb-Jc8" secondAttribute="trailing" constant="8" id="N8Q-Eq-8j2"/>
+                    <constraint firstItem="Zit-Fv-qPC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="SXc-y2-boL"/>
+                    <constraint firstItem="r9E-NQ-Ds6" firstAttribute="top" secondItem="aZQ-yb-Jc8" secondAttribute="bottom" constant="1" id="TNe-v1-Lvk"/>
+                    <constraint firstItem="Pi3-Ds-vjc" firstAttribute="top" secondItem="aUV-oU-bfS" secondAttribute="bottom" constant="1" id="UuN-Xm-dt1"/>
+                    <constraint firstItem="aUV-oU-bfS" firstAttribute="top" secondItem="r9E-NQ-Ds6" secondAttribute="bottom" constant="45.5" id="XsZ-Nh-dda"/>
+                    <constraint firstItem="Pi3-Ds-vjc" firstAttribute="leading" secondItem="aUV-oU-bfS" secondAttribute="leading" id="e8S-Lq-fwg"/>
+                    <constraint firstItem="Zit-Fv-qPC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="eqa-8O-vLw"/>
+                    <constraint firstItem="aUV-oU-bfS" firstAttribute="leading" secondItem="r9E-NQ-Ds6" secondAttribute="leading" id="g81-VE-Rlm"/>
+                    <constraint firstItem="r9E-NQ-Ds6" firstAttribute="leading" secondItem="aZQ-yb-Jc8" secondAttribute="leading" id="gSw-9z-rG6"/>
+                    <constraint firstItem="aZQ-yb-Jc8" firstAttribute="top" secondItem="Zit-Fv-qPC" secondAttribute="bottom" constant="8" id="nds-dC-iIM"/>
+                    <constraint firstItem="aZQ-yb-Jc8" firstAttribute="leading" secondItem="Zit-Fv-qPC" secondAttribute="leading" id="p5q-4b-Ddk"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="departmentLabel" destination="aUV-oU-bfS" id="fdv-zF-H1Q"/>
+                <outlet property="directionLabel" destination="r9E-NQ-Ds6" id="gHr-yq-lT0"/>
+                <outlet property="nameLabel" destination="aZQ-yb-Jc8" id="gGM-lG-lUP"/>
+                <outlet property="typeStudyingLabel" destination="Pi3-Ds-vjc" id="QpU-hb-4wC"/>
+            </connections>
+            <point key="canvasLocation" x="25" y="113"/>
+        </tableViewCell>
+    </objects>
+</document>
