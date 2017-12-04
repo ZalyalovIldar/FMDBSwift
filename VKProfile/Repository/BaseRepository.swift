@@ -42,7 +42,7 @@ class BaseRepository: Repository {
        let documentsDirectory = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString) as String
         return documentsDirectory.appending("/\(databaseFileName)")
     }()
-    private var database: FMDatabase!
+    var database: FMDatabase!
     
     init() {
         createDatabase()
@@ -130,7 +130,7 @@ class BaseRepository: Repository {
         }
     }
     
-    private func openDatabase() -> Bool {
+    func openDatabase() -> Bool {
         if database == nil {
             if FileManager.default.fileExists(atPath: pathToDatabase) {
                 database = FMDatabase(path: pathToDatabase)

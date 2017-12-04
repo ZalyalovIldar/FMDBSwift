@@ -10,9 +10,18 @@ import Foundation
 
 class UserRepository: BaseRepository {
     
+    let checkUserSQL = "SELECT user_id FROM users WHERE user_email = ? AND user_passwrod = ?;"
+    
     func check(with email: String, and password: String) -> Bool {
-        let users: [UserVK] = syncGetAll()
-        return users.contains(where: { $0.email == email && $0.password == password })
+        if openDatabase() {
+            do {
+                let result = try database.executeQuery(checkUserSQL, values: [email, password])
+                return result.next()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return false
     }
     
     func search(with email: String) -> UserVK? {
