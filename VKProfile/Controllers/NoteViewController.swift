@@ -42,7 +42,8 @@ class NoteViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func onDoneClick(_ sender: Any) {
         guard let mainText = newsTextView.text else { return }
-        let news = News(text: mainText, image: nil, likeCount: 0, commentCount: 0, respostCount: 0)
+        let userID = UserDefaults.standard.integer(forKey: userIdKey)
+        let news = News(text: mainText, image: nil, likeCount: 0, commentCount: 0, respostCount: 0, userID: userID)
         createNewsDelegate?.createNews(from: news)
         
         dismiss(animated: true, completion: nil)

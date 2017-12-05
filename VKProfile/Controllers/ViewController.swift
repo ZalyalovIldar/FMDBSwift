@@ -130,13 +130,13 @@ class ViewController: UITableViewController, CreateNewsDelegate, UICollectionVie
         let demoNewsCreatedKey = "demoNewsCreated"
         guard !UserDefaults.standard.bool(forKey: demoNewsCreatedKey) else { return }
         
-        let news1 = News(text: newsText1, image: user.photos[0], likeCount: 72, commentCount: 8, respostCount: 16)
-        let news2 = News(text: newsText2, image: user.photos[1], likeCount: 5, commentCount: 17, respostCount: 48)
-        let news3 = News(text: newsText3, image: user.photos[2], likeCount: 77, commentCount: 39, respostCount: 2)
+        let news1 = News(text: newsText1, image: user.photos[0], likeCount: 72, commentCount: 8, respostCount: 16, userID: userVK.id)
+        let news2 = News(text: newsText2, image: user.photos[1], likeCount: 5, commentCount: 17, respostCount: 48, userID: userVK.id)
+        let news3 = News(text: newsText3, image: user.photos[2], likeCount: 77, commentCount: 39, respostCount: 2, userID: userVK.id)
         
-        repository.syncSave(with: news1)
-        repository.syncSave(with: news2)
-        repository.syncSave(with: news3)
+        if !repository.syncSave(with: news1), !repository.syncSave(with: news2), !repository.syncSave(with: news3) {
+            self.showDatabaseSaveError()
+        }
         
         UserDefaults.standard.set(true, forKey: demoNewsCreatedKey)
     }
@@ -208,7 +208,9 @@ class ViewController: UITableViewController, CreateNewsDelegate, UICollectionVie
     func createNews(from newsData: News) {
         news.append(newsData)
         tableView.reloadData()
-        repository.syncSave(with: newsData)
+        if !repository.syncSave(with: newsData) {
+            self.showDatabaseSaveError()
+        }
     }
     
     @IBAction func onMoreClick(_ sender: UIBarButtonItem) {

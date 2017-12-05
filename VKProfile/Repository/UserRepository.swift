@@ -18,9 +18,9 @@ class UserRepository: BaseRepository {
     }
     
     func check(with email: String, and password: String) -> Bool {
-        if openDatabase() {
+        if databaseManager.openDatabase() {
             do {
-                let result = try database.executeQuery(checkUserSQL, values: [email, password])
+                let result = try databaseManager.database.executeQuery(checkUserSQL, values: [email, password])
                 return result.next()
             } catch {
                 print(error.localizedDescription)
@@ -30,9 +30,9 @@ class UserRepository: BaseRepository {
     }
     
     func search(with email: String) -> UserVK? {
-        if openDatabase() {
+        if databaseManager.openDatabase() {
             do {
-                let result = try database.executeQuery(searchUserSQL, values: [email])
+                let result = try databaseManager.database.executeQuery(searchUserSQL, values: [email])
                 if result.next() {
                     let id = Int(result.int(forColumn: BaseRepository.field_user_id))
                     let age = Int(result.int(forColumn: BaseRepository.field_user_age))

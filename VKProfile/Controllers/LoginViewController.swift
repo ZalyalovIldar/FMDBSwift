@@ -28,7 +28,9 @@ class LoginViewController: UIViewController {
         let demoUserCreatedKey = "demoUserCreated"
         if !UserDefaults.standard.bool(forKey: demoUserCreatedKey) {
             let user = UserVK(name: "Тимур", surname: "Шафигуллин", email: "iOSDeveloper@icloud.com", phoneNumber: "+79172513599", age: 19, city: "Казань", password: "qwe")
-            repository.syncSave(with: user)
+            if !repository.syncSave(with: user) {
+                self.showDatabaseSaveError()
+            }
             UserDefaults.standard.set(true, forKey: demoUserCreatedKey)
         }
     }
@@ -54,6 +56,7 @@ class LoginViewController: UIViewController {
             
             guard let userVK = repository.search(with: email) else { return }
             mainPageVC.userVK = userVK
+            UserDefaults.standard.set(userVK.id, forKey: userIdKey)
             
             present(mainPageNVC, animated: true, completion: nil)
         } else {

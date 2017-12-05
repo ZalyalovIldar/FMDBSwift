@@ -92,7 +92,9 @@ class RegistrationViewController: UIViewController {
         }
         
         let userVK = UserVK(name: name, surname: surname, email: email, phoneNumber: phoneNumber, age: age, city: city, password: password)
-        repository.syncSave(with: userVK)
+        if !repository.syncSave(with: userVK) {
+            self.showDatabaseSaveError()
+        }
         
         navigationController?.popViewController(animated: true)
     }

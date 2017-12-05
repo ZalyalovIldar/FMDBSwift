@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import FMDB
 
 fileprivate enum ObjectType {
     case user
@@ -34,38 +33,34 @@ class BaseRepository: Repository {
     static let field_news_comment_count = "news_comment_count"
     static let field_news_repost_count = "news_repost_count"
     
-    private let createUsersTableSQL = "CREATE TABLE users (\(field_user_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_user_name) TEXT NOT NULL, \(field_user_surname) TEXT NOT NULL, \(field_user_email) TEXT NOT NULL, \(field_user_phone_number) TEXT NOT NULL, \(field_user_age) INTEGER NOT NULL, \(field_user_city) TEXT NOT NULL, \(field_user_password) TEXT NOT NULL, CONSTRAINT email_unique UNIQUE (\(field_user_email)));"
-    private let createNewsTableSQL = "CREATE TABLE news (\(field_news_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_news_text) TEXT NOT NULL, \(field_news_image) TEXT NOT NULL, \(field_news_like_count) INTEGER NOT NULL, \(field_news_comment_count) INTEGER NOT NULL, \(field_news_repost_count) INTEGER NOT NULL);"
-    private let insertUserSQL = "INSERT INTO users (\(field_user_name), \(field_user_surname), \(field_user_email), \(field_user_phone_number), \(field_user_age), \(field_user_city), \(field_user_password)) VALUES (?, ?, ?, ?, ?, ?, ?);"
-    private let insertNewsSQL = "INSERT INTO news (\(field_news_text), \(field_news_image), \(field_news_like_count), \(field_news_comment_count), \(field_news_repost_count)) VALUES (?, ?, ?, ?, ?);"
+    var databaseManager: DatabaseManager!
     
-    private let databaseFileName = "vkapp.sqlite"
-    private lazy var pathToDatabase: String = {
-       let documentsDirectory = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString) as String
-        return documentsDirectory.appending("/\(databaseFileName)")
-    }()
-    var database: FMDatabase!
+    private let createUsersTableSQL = "CREATE TABLE users (\(field_user_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_user_name) TEXT NOT NULL, \(field_user_surname) TEXT NOT NULL, \(field_user_email) TEXT NOT NULL, \(field_user_phone_number) TEXT NOT NULL, \(field_user_age) INTEGER NOT NULL, \(field_user_city) TEXT NOT NULL, \(field_user_password) TEXT NOT NULL, CONSTRAINT email_unique UNIQUE (\(field_user_email)));"
+    private let createNewsTableSQL = "CREATE TABLE news (\(field_news_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_news_text) TEXT NOT NULL, \(field_news_image) TEXT NOT NULL, \(field_news_like_count) INTEGER NOT NULL, \(field_news_comment_count) INTEGER NOT NULL, \(field_news_repost_count) INTEGER NOT NULL, \(field_user_id) INTEGER NOT NULL);"
+    private let insertUserSQL = "INSERT INTO users (\(field_user_name), \(field_user_surname), \(field_user_email), \(field_user_phone_number), \(field_user_age), \(field_user_city), \(field_user_password)) VALUES (?, ?, ?, ?, ?, ?, ?);"
+    private let insertNewsSQL = "INSERT INTO news (\(field_news_text), \(field_news_image), \(field_news_like_count), \(field_news_comment_count), \(field_news_repost_count), \(field_user_id)) VALUES (?, ?, ?, ?, ?, ?);"
     
     init() {
-        createDatabase()
+        databaseManager = DatabaseManager()
+        databaseManager.createDatabase(sql: [createNewsTableSQL, createUsersTableSQL])
     }
     
-    func syncSave<T>(with object: T) where T : Storable {
-        object.id = Int(arc4random())
+    func syncSave<T>(with object: T) -> Bool where T : Storable {
         let objectName = genericName(object)
         if objectName == "News" {
-            let _ = insert(object, type: .news)
+            return insert(object, type: .news)
         }
         if objectName == "UserVK" {
-            let _ = insert(object, type: .user)
+            return insert(object, type: .user)
         }
+        return false
     }
     
     func asyncSave<T>(with object: T, completionBlock: @escaping (Bool) -> ()) where T : Storable {
         OperationQueue().addOperation { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.syncSave(with: object)
-            completionBlock(true)
+            let isSaved = strongSelf.syncSave(with: object)
+            completionBlock(isSaved)
         }
     }
     
@@ -109,46 +104,10 @@ class BaseRepository: Repository {
         return nil
     }
     
-    //MARK: - Database prepare methods
-    
-    private func createDatabase() {
-        if !FileManager.default.fileExists(atPath: pathToDatabase) {
-            database = FMDatabase(path: pathToDatabase)
-            if database != nil {
-                if database.open() {
-                    do {
-                        try database.executeUpdate(createUsersTableSQL, values: nil)
-                        try database.executeUpdate(createNewsTableSQL, values: nil)
-                    } catch {
-                        print("Could not create table")
-                        print(error.localizedDescription)
-                    }
-                    database.close()
-                } else {
-                    print("Could not open the database")
-                }
-            }
-        }
-    }
-    
-    func openDatabase() -> Bool {
-        if database == nil {
-            if FileManager.default.fileExists(atPath: pathToDatabase) {
-                database = FMDatabase(path: pathToDatabase)
-            }
-        }
-        if database != nil {
-            if database.open() {
-                return true
-            }
-        }
-        return false
-    }
-    
     //MARK: - Insert methods
     
     private func insert<T: Storable>(_ user: T, type: ObjectType) -> Bool {
-        if openDatabase() {
+        if databaseManager.openDatabase() {
             let userMirror = Mirror(reflecting: user)
             var values = userMirror.children.map { $0.value }
             values.removeFirst()
@@ -159,15 +118,18 @@ class BaseRepository: Repository {
             if type == .user {
                 insertSQL = insertUserSQL
             }
-            let isUpdated = database.executeUpdate(insertSQL, withArgumentsIn: values)
+            let isUpdated = databaseManager.database.executeUpdate(insertSQL, withArgumentsIn: values)
             if !isUpdated {
                 print("Failed to insert news")
-                print(database.lastError(), database.lastErrorMessage())
+                print(databaseManager.database.lastError(),databaseManager.database.lastErrorMessage())
             }
             return isUpdated
         }
         return false
     }
+    
+    //MARK: - Get methods
+    
     
     //MARK: - Helpers methods
     

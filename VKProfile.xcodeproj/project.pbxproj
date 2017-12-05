@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		59450B721FA34F9800F3DC32 /* DetailsNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59450B711FA34F9800F3DC32 /* DetailsNewsViewController.swift */; };
 		9654BE6797534283090BE239 /* Pods_VKProfile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C0F87D36041A347C1CF713 /* Pods_VKProfile.framework */; };
+		CB0EC5481FD75498001E6B6E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0EC5471FD75498001E6B6E /* DatabaseManager.swift */; };
+		CB0EC54A1FD75AC2001E6B6E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0EC5491FD75AC2001E6B6E /* Config.swift */; };
+		CB0EC54C1FD75CB3001E6B6E /* AlertMessanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0EC54B1FD75CB3001E6B6E /* AlertMessanger.swift */; };
 		CB1F450C1FA7AC07007B9AFE /* KeyboardResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F450B1FA7AC07007B9AFE /* KeyboardResizer.swift */; };
 		CB1F450E1FA7D2C5007B9AFE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1F450D1FA7D2C5007B9AFE /* LoginViewController.swift */; };
 		CB42F4D21F73035400871971 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB42F4D11F73035400871971 /* InfoTableViewController.swift */; };
@@ -83,6 +86,9 @@
 		59450B711FA34F9800F3DC32 /* DetailsNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsNewsViewController.swift; sourceTree = "<group>"; };
 		8A68C5F5899050C30EF77C04 /* Pods-VKProfile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKProfile.release.xcconfig"; path = "Pods/Target Support Files/Pods-VKProfile/Pods-VKProfile.release.xcconfig"; sourceTree = "<group>"; };
 		BD2F86C07635067D3A9F7203 /* Pods-VKProfile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKProfile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VKProfile/Pods-VKProfile.debug.xcconfig"; sourceTree = "<group>"; };
+		CB0EC5471FD75498001E6B6E /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		CB0EC5491FD75AC2001E6B6E /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		CB0EC54B1FD75CB3001E6B6E /* AlertMessanger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessanger.swift; sourceTree = "<group>"; };
 		CB1F450B1FA7AC07007B9AFE /* KeyboardResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResizer.swift; sourceTree = "<group>"; };
 		CB1F450D1FA7D2C5007B9AFE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CB42F4D11F73035400871971 /* InfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
@@ -256,6 +262,7 @@
 		CBD1043C1F743B5800A48BCD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CB0EC5471FD75498001E6B6E /* DatabaseManager.swift */,
 				CB5A0B4D1FA77069009373D6 /* TapToHideKeyboard.swift */,
 				CB5A0B4B1FA76AEA009373D6 /* CheckBox.swift */,
 				CBD104371F7439A200A48BCD /* DeclinationWord.swift */,
@@ -267,6 +274,8 @@
 				CB8935261F87A51000C26DD2 /* TextContainer.swift */,
 				CB5A0B4F1FA77501009373D6 /* ShakeAnimation.swift */,
 				CB1F450B1FA7AC07007B9AFE /* KeyboardResizer.swift */,
+				CB0EC5491FD75AC2001E6B6E /* Config.swift */,
+				CB0EC54B1FD75CB3001E6B6E /* AlertMessanger.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -501,6 +510,7 @@
 				CBD104541F7575F000A48BCD /* MainInfo.swift in Sources */,
 				CB5A0B521FA7782C009373D6 /* UserRepository.swift in Sources */,
 				CB5A0B481FA767A8009373D6 /* RegistrationViewController.swift in Sources */,
+				CB0EC5481FD75498001E6B6E /* DatabaseManager.swift in Sources */,
 				CB5A0B4E1FA77069009373D6 /* TapToHideKeyboard.swift in Sources */,
 				CB8489931F75AB3800D2FEE7 /* Institute.swift in Sources */,
 				CB8935271F87A51000C26DD2 /* TextContainer.swift in Sources */,
@@ -513,6 +523,7 @@
 				CBD1044F1F75653E00A48BCD /* ContactInfo.swift in Sources */,
 				CB5A1A781F66D55500C1971E /* ViewController.swift in Sources */,
 				CB5A1A761F66D55500C1971E /* AppDelegate.swift in Sources */,
+				CB0EC54A1FD75AC2001E6B6E /* Config.swift in Sources */,
 				CB7061E61F76DFA2008A14A8 /* OtherInfo.swift in Sources */,
 				CBD104641F75A66D00A48BCD /* EducationInfo.swift in Sources */,
 				CB1F450E1FA7D2C5007B9AFE /* LoginViewController.swift in Sources */,
@@ -521,6 +532,7 @@
 				CB5A0B4C1FA76AEA009373D6 /* CheckBox.swift in Sources */,
 				CB5A0B441FA7587B009373D6 /* WelcomeViewController.swift in Sources */,
 				CB9B22AF1F6EACEE0093AA92 /* UserInfoData.swift in Sources */,
+				CB0EC54C1FD75CB3001E6B6E /* AlertMessanger.swift in Sources */,
 				CBD104471F752E2900A48BCD /* MainInfoTableViewCell.swift in Sources */,
 				CB6C99AB1FCC56BE00EE25C9 /* BaseRepository.swift in Sources */,
 				CB42F4D71F7304ED00871971 /* ColorRGB.swift in Sources */,
