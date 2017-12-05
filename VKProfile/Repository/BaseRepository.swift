@@ -14,25 +14,27 @@ fileprivate enum ObjectType {
     case news
 }
 
-fileprivate let field_user_id = "user_id"
-fileprivate let field_user_name = "user_name"
-fileprivate let field_user_surname = "user_surname"
-fileprivate let field_user_email = "user_email"
-fileprivate let field_user_phone_number = "user_phone_number"
-fileprivate let field_user_age = "user_age"
-fileprivate let field_user_city = "user_city"
-fileprivate let field_user_password = "user_password"
 
-fileprivate let field_news_id = "news_id"
-fileprivate let field_news_text = "news_text"
-fileprivate let field_news_image = "news_image"
-fileprivate let field_news_like_count = "news_like_count"
-fileprivate let field_news_comment_count = "news_comment_count"
-fileprivate let field_news_repost_count = "news_repost_count"
 
 class BaseRepository: Repository {
     
-    private let createUsersTableSQL = "CREATE TABLE users (\(field_user_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_user_name) TEXT NOT NULL, \(field_user_surname) TEXT NOT NULL, \(field_user_email) TEXT NOT NULL, \(field_user_phone_number) TEXT NOT NULL, \(field_user_age) INTEGER NOT NULL, \(field_user_city) TEXT NOT NULL, \(field_user_password) TEXT NOT NULL, CONSTRAINT email_unique UNIQUE (\(field_user_email));"
+    static let field_user_id = "user_id"
+    static let field_user_name = "user_name"
+    static let field_user_surname = "user_surname"
+    static let field_user_email = "user_email"
+    static let field_user_phone_number = "user_phone_number"
+    static let field_user_age = "user_age"
+    static let field_user_city = "user_city"
+    static let field_user_password = "user_password"
+    
+    static let field_news_id = "news_id"
+    static let field_news_text = "news_text"
+    static let field_news_image = "news_image"
+    static let field_news_like_count = "news_like_count"
+    static let field_news_comment_count = "news_comment_count"
+    static let field_news_repost_count = "news_repost_count"
+    
+    private let createUsersTableSQL = "CREATE TABLE users (\(field_user_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_user_name) TEXT NOT NULL, \(field_user_surname) TEXT NOT NULL, \(field_user_email) TEXT NOT NULL, \(field_user_phone_number) TEXT NOT NULL, \(field_user_age) INTEGER NOT NULL, \(field_user_city) TEXT NOT NULL, \(field_user_password) TEXT NOT NULL, CONSTRAINT email_unique UNIQUE (\(field_user_email)));"
     private let createNewsTableSQL = "CREATE TABLE news (\(field_news_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_news_text) TEXT NOT NULL, \(field_news_image) TEXT NOT NULL, \(field_news_like_count) INTEGER NOT NULL, \(field_news_comment_count) INTEGER NOT NULL, \(field_news_repost_count) INTEGER NOT NULL);"
     private let insertUserSQL = "INSERT INTO users (\(field_user_name), \(field_user_surname), \(field_user_email), \(field_user_phone_number), \(field_user_age), \(field_user_city), \(field_user_password)) VALUES (?, ?, ?, ?, ?, ?, ?);"
     private let insertNewsSQL = "INSERT INTO news (\(field_news_text), \(field_news_image), \(field_news_like_count), \(field_news_comment_count), \(field_news_repost_count)) VALUES (?, ?, ?, ?, ?);"
@@ -46,7 +48,6 @@ class BaseRepository: Repository {
     
     init() {
         createDatabase()
-        
     }
     
     func syncSave<T>(with object: T) where T : Storable {
@@ -55,7 +56,7 @@ class BaseRepository: Repository {
         if objectName == "News" {
             let _ = insert(object, type: .news)
         }
-        if objectName == "User" {
+        if objectName == "UserVK" {
             let _ = insert(object, type: .user)
         }
     }
@@ -174,7 +175,7 @@ class BaseRepository: Repository {
         let fullName = NSStringFromClass(T.self)
         let range = fullName.range(of: ".")
         if let range = range {
-            return String(fullName[range.lowerBound..<range.upperBound])
+            return String(fullName[range.upperBound..<fullName.endIndex])
         }
         return fullName
     }

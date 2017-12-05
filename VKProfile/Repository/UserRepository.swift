@@ -10,7 +10,12 @@ import Foundation
 
 class UserRepository: BaseRepository {
     
-    let checkUserSQL = "SELECT user_id FROM users WHERE user_email = ? AND user_passwrod = ?;"
+    let checkUserSQL = "SELECT \(field_user_id) FROM users WHERE \(field_user_email) = ? AND \(field_user_password) = ?;"
+    let searchUserSQL = "SELECT * FROM users WHERE \(field_user_email) = ?;"
+    
+    override init() {
+        super.init()
+    }
     
     func check(with email: String, and password: String) -> Bool {
         if openDatabase() {
@@ -25,8 +30,26 @@ class UserRepository: BaseRepository {
     }
     
     func search(with email: String) -> UserVK? {
-        let users: [UserVK] = syncGetAll()
-        return users.first(where: { $0.email == email })
+        if openDatabase() {
+            do {
+                let result = try database.executeQuery(searchUserSQL, values: [email])
+                if result.next() {
+                    let id = Int(result.int(forColumn: BaseRepository.field_user_id))
+                    let age = Int(result.int(forColumn: BaseRepository.field_user_age))
+                    guard let name = result.string(forColumn: BaseRepository.field_user_name),
+                    let surname = result.string(forColumn: BaseRepository.field_user_surname),
+                    let email = result.string(forColumn: BaseRepository.field_user_email),
+                    let phoneNumber = result.string(forColumn: BaseRepository.field_user_phone_number),
+                    let city = result.string(forColumn: BaseRepository.field_user_city),
+                    let password = result.string(forColumn: BaseRepository.field_user_password) else { return nil }
+                    
+                    return UserVK(id: id, name: name, surname: surname, email: email, phoneNumber: phoneNumber, age: age, city: city, password: password)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
     }
     
 }
