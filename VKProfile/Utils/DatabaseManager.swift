@@ -53,4 +53,8 @@ class DatabaseManager {
         return false
     }
     
+    func close() {
+        database.close()
+    }
+    
 }

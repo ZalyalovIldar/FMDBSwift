@@ -28,7 +28,8 @@ class LoginViewController: UIViewController {
         let demoUserCreatedKey = "demoUserCreated"
         if !UserDefaults.standard.bool(forKey: demoUserCreatedKey) {
             let user = UserVK(name: "Тимур", surname: "Шафигуллин", email: "iOSDeveloper@icloud.com", phoneNumber: "+79172513599", age: 19, city: "Казань", password: "qwe")
-            if !repository.syncSave(with: user) {
+            let secondUser = UserVK(name: "Дмитрий", surname: "Николаев", email: "Swift@icloud.com", phoneNumber: "89193456789", age: 19, city: "Казань", password: "qwe123")
+            if !(repository.syncSave(with: user) && repository.syncSave(with: secondUser)) {
                 self.showDatabaseSaveError()
             }
             UserDefaults.standard.set(true, forKey: demoUserCreatedKey)

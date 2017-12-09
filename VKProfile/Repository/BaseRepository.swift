@@ -6,7 +6,8 @@
 //  Copyright © 2017 iOS Lab ITIS. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import FMDB
 
 fileprivate enum ObjectType {
     case user
@@ -36,9 +37,11 @@ class BaseRepository: Repository {
     var databaseManager: DatabaseManager!
     
     private let createUsersTableSQL = "CREATE TABLE users (\(field_user_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_user_name) TEXT NOT NULL, \(field_user_surname) TEXT NOT NULL, \(field_user_email) TEXT NOT NULL, \(field_user_phone_number) TEXT NOT NULL, \(field_user_age) INTEGER NOT NULL, \(field_user_city) TEXT NOT NULL, \(field_user_password) TEXT NOT NULL, CONSTRAINT email_unique UNIQUE (\(field_user_email)));"
-    private let createNewsTableSQL = "CREATE TABLE news (\(field_news_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_news_text) TEXT NOT NULL, \(field_news_image) TEXT NOT NULL, \(field_news_like_count) INTEGER NOT NULL, \(field_news_comment_count) INTEGER NOT NULL, \(field_news_repost_count) INTEGER NOT NULL, \(field_user_id) INTEGER NOT NULL);"
-    private let insertUserSQL = "INSERT INTO users (\(field_user_name), \(field_user_surname), \(field_user_email), \(field_user_phone_number), \(field_user_age), \(field_user_city), \(field_user_password)) VALUES (?, ?, ?, ?, ?, ?, ?);"
-    private let insertNewsSQL = "INSERT INTO news (\(field_news_text), \(field_news_image), \(field_news_like_count), \(field_news_comment_count), \(field_news_repost_count), \(field_user_id)) VALUES (?, ?, ?, ?, ?, ?);"
+    private let createNewsTableSQL = "CREATE TABLE news (\(field_news_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_news_text) TEXT NOT NULL, \(field_news_image) BLOB, \(field_news_like_count) INTEGER NOT NULL, \(field_news_comment_count) INTEGER NOT NULL, \(field_news_repost_count) INTEGER NOT NULL, \(field_user_id) INTEGER NOT NULL);"
+    private let selectAllNewsSQL = "SELECT * FROM news;"
+    private let selectAllUsersSQL = "SELECT * FROM users;"
+    private let searchNewsSQL = "SELECT * FROM news WHERE \(field_news_id) = ?;"
+    private let searchUserSQL = "SELECT * FROM users WHERE \(field_user_id) = ?;"
     
     init() {
         databaseManager = DatabaseManager()
@@ -46,14 +49,11 @@ class BaseRepository: Repository {
     }
     
     func syncSave<T>(with object: T) -> Bool where T : Storable {
-        let objectName = genericName(object)
-        if objectName == "News" {
-            return insert(object, type: .news)
-        }
-        if objectName == "UserVK" {
-            return insert(object, type: .user)
-        }
-        return false
+        guard databaseManager.openDatabase() else { return false }
+
+        let isSaved = databaseManager.database.executeUpdate(object.insertQuery.query, withArgumentsIn: object.insertQuery.data)
+        databaseManager.close()
+        return isSaved
     }
     
     func asyncSave<T>(with object: T, completionBlock: @escaping (Bool) -> ()) where T : Storable {
@@ -64,12 +64,18 @@ class BaseRepository: Repository {
         }
     }
     
-    func syncGetAll<T>() -> [T] where T : Storable {
-        let objectName = NSStringFromClass(T.self)
-        return getData(key: objectName) ?? [T]()
+    func syncGetAll<T>() -> [T]? where T : Storable {
+        let objectName = genericName(T.self)
+        if objectName == "News" {
+            return getAllNews() as? [T]
+        } else if objectName == "UserVK" {
+            return getAllUsers() as? [T]
+        }
+        
+        return nil
     }
     
-    func asyncGetAll<T>(completionBlock: @escaping ([T]) -> ()) where T : Storable {
+    func asyncGetAll<T>(completionBlock: @escaping ([T]?) -> ()) where T : Storable {
         OperationQueue().addOperation { [weak self] in
             guard let strongSelf = self else { return }
             completionBlock(strongSelf.syncGetAll())
@@ -77,12 +83,14 @@ class BaseRepository: Repository {
     }
     
     func syncSearch<T>(id: Int, type: T.Type) -> T? where T : Storable {
-        let objectName = NSStringFromClass(type)
-        let objects = getData(key: objectName) ?? [T]()
-        if objects.isEmpty {
-            return nil
+        let objectName = genericName(T.self)
+        if objectName == "News" {
+            return getNews(with: id) as? T
+        } else if objectName == "UserVK" {
+            return getUser(with: id) as? T
         }
-        return objects.first(where: { $0.id == id })
+        
+        return nil
     }
     
     func asyncSearch<T>(id: Int, type: T.Type, completionBlock: @escaping (T?) -> ()) where T : Storable {
@@ -104,36 +112,103 @@ class BaseRepository: Repository {
         return nil
     }
     
-    //MARK: - Insert methods
-    
-    private func insert<T: Storable>(_ user: T, type: ObjectType) -> Bool {
-        if databaseManager.openDatabase() {
-            let userMirror = Mirror(reflecting: user)
-            var values = userMirror.children.map { $0.value }
-            values.removeFirst()
-            var insertSQL: String!
-            if type == .news {
-                insertSQL = insertNewsSQL
-            }
-            if type == .user {
-                insertSQL = insertUserSQL
-            }
-            let isUpdated = databaseManager.database.executeUpdate(insertSQL, withArgumentsIn: values)
-            if !isUpdated {
-                print("Failed to insert news")
-                print(databaseManager.database.lastError(),databaseManager.database.lastErrorMessage())
-            }
-            return isUpdated
-        }
-        return false
-    }
-    
     //MARK: - Get methods
     
+    private func getAllNews() -> [News]? {
+        guard databaseManager.openDatabase() else { return nil }
+    
+        do {
+            let results = try databaseManager.database.executeQuery(selectAllNewsSQL, values: nil)
+            databaseManager.close()
+            return getNews(from: results)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+    
+    private func getAllUsers() -> [UserVK]? {
+        guard databaseManager.openDatabase() else { return nil }
+        
+        do {
+            let results = try databaseManager.database.executeQuery(selectAllUsersSQL, values: nil)
+            databaseManager.close()
+            return getUsers(from: results)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+    
+    private func getNews(with ID: Int) -> News? {
+        guard databaseManager.openDatabase() else { return nil }
+        
+        do {
+            let result = try databaseManager.database.executeQuery(searchNewsSQL, values: [ID])
+            databaseManager.close()
+            return getNews(from: result)?.first
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return nil
+    }
+    
+    private func getUser(with ID: Int) -> UserVK? {
+        guard databaseManager.openDatabase() else { return nil }
+        
+        do {
+            let result = try databaseManager.database.executeQuery(searchUserSQL, values: [ID])
+            databaseManager.close()
+            return getUsers(from: result)?.first
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return nil
+    }
     
     //MARK: - Helpers methods
     
-    private func genericName<T: Storable>(_ object: T) -> String {
+    func getUsers(from result: FMResultSet) -> [UserVK]? {
+        var users = [UserVK]()
+        while result.next() {
+            let id = Int(result.int(forColumn: BaseRepository.field_user_id))
+            let age = Int(result.int(forColumn: BaseRepository.field_user_age))
+            guard let name = result.string(forColumn: BaseRepository.field_user_name),
+                let surname = result.string(forColumn: BaseRepository.field_user_surname),
+                let email = result.string(forColumn: BaseRepository.field_user_email),
+                let phoneNumber = result.string(forColumn: BaseRepository.field_user_phone_number),
+                let city = result.string(forColumn: BaseRepository.field_user_city),
+                let password = result.string(forColumn: BaseRepository.field_user_password) else { return nil }
+            
+            users.append(UserVK(id: id, name: name, surname: surname, email: email, phoneNumber: phoneNumber, age: age, city: city, password: password))
+        }
+        return users.isEmpty ? nil : users
+    }
+    
+    func getNews(from results: FMResultSet) -> [News]? {
+        var news = [News]()
+        while results.next() {
+            let id = Int(results.int(forColumn: BaseRepository.field_news_id))
+            let likeCount = Int(results.int(forColumn: BaseRepository.field_news_like_count))
+            let commentCount = Int(results.int(forColumn: BaseRepository.field_news_comment_count))
+            let repostCount = Int(results.int(forColumn: BaseRepository.field_news_repost_count))
+            let userID = Int(results.int(forColumn: BaseRepository.field_user_id))
+            guard let text = results.string(forColumn: BaseRepository.field_news_text) else { return nil }
+            
+            var image: UIImage?
+            if let imageData = results.data(forColumn: BaseRepository.field_news_image) {
+                image = UIImage(data: imageData)
+            }
+            
+            news.append(News(id: id, text: text, image: image, likeCount: likeCount, commentCount: commentCount, respostCount: repostCount, userID: userID))
+        }
+        databaseManager.close()
+        return (news.isEmpty) ? nil : news
+    }
+    
+    private func genericName<T: AnyObject>(_ type: T.Type) -> String {
         let fullName = NSStringFromClass(T.self)
         let range = fullName.range(of: ".")
         if let range = range {

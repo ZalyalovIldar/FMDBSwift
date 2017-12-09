@@ -10,6 +10,11 @@ import Foundation
 
 class UserVK: NSObject, Storable {
     
+    lazy var insertQuery: InsertQuery = {
+       let insertSQL = "INSERT INTO users (\(BaseRepository.field_user_name), \(BaseRepository.field_user_surname), \(BaseRepository.field_user_email), \(BaseRepository.field_user_phone_number), \(BaseRepository.field_user_age), \(BaseRepository.field_user_city), \(BaseRepository.field_user_password)) VALUES (?, ?, ?, ?, ?, ?, ?);"
+        return InsertQuery(query: insertSQL, data: [name, surname, email, phoneNumber, age, city, password])
+    }()
+    
     @objc var id: Int
     @objc var name: String
     @objc var surname: String

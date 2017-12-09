@@ -69,7 +69,7 @@ class ViewController: UITableViewController, CreateNewsDelegate, UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         user = generateUser()
-        repository = BaseRepository()
+        repository = NewsRepository()
         
         infoButtonsCollectionView.delegate = self
         prepareCollectionViews()
@@ -121,7 +121,7 @@ class ViewController: UITableViewController, CreateNewsDelegate, UICollectionVie
     }
     
     @objc private func refresh() {
-        news = repository.syncGetAll()
+        news = repository.syncGetAll() ?? [News]()
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }
@@ -134,7 +134,7 @@ class ViewController: UITableViewController, CreateNewsDelegate, UICollectionVie
         let news2 = News(text: newsText2, image: user.photos[1], likeCount: 5, commentCount: 17, respostCount: 48, userID: userVK.id)
         let news3 = News(text: newsText3, image: user.photos[2], likeCount: 77, commentCount: 39, respostCount: 2, userID: userVK.id)
         
-        if !repository.syncSave(with: news1), !repository.syncSave(with: news2), !repository.syncSave(with: news3) {
+        if !(repository.syncSave(with: news1) && repository.syncSave(with: news2) && repository.syncSave(with: news3)) {
             self.showDatabaseSaveError()
         }
         
@@ -142,7 +142,7 @@ class ViewController: UITableViewController, CreateNewsDelegate, UICollectionVie
     }
     
     private func loadNews() {
-        news = repository.syncGetAll()
+        news = (repository as! NewsRepository).getNews(with: userVK.id) ?? [News]()
     }
     
     override func viewDidLayoutSubviews() {

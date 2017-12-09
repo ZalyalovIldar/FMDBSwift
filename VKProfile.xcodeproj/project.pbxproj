@@ -18,6 +18,8 @@
 		CB42F4D51F73048900871971 /* ImageRounder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB42F4D41F73048900871971 /* ImageRounder.swift */; };
 		CB42F4D71F7304ED00871971 /* ColorRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB42F4D61F7304ED00871971 /* ColorRGB.swift */; };
 		CB42F4D91F730BA000871971 /* EndingWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB42F4D81F730BA000871971 /* EndingWord.swift */; };
+		CB5036E41FD9EDB9001114FD /* InsertQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5036E31FD9EDB9001114FD /* InsertQuery.swift */; };
+		CB5036E61FD9FBFA001114FD /* NewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5036E51FD9FBFA001114FD /* NewsRepository.swift */; };
 		CB5723731FA24A11009747E1 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5723721FA24A11009747E1 /* Repository.swift */; };
 		CB5A0B441FA7587B009373D6 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A0B431FA7587B009373D6 /* WelcomeViewController.swift */; };
 		CB5A0B461FA75AD7009373D6 /* WelcomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A0B451FA75AD7009373D6 /* WelcomePageViewController.swift */; };
@@ -95,6 +97,8 @@
 		CB42F4D41F73048900871971 /* ImageRounder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRounder.swift; sourceTree = "<group>"; };
 		CB42F4D61F7304ED00871971 /* ColorRGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorRGB.swift; sourceTree = "<group>"; };
 		CB42F4D81F730BA000871971 /* EndingWord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndingWord.swift; sourceTree = "<group>"; };
+		CB5036E31FD9EDB9001114FD /* InsertQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertQuery.swift; sourceTree = "<group>"; };
+		CB5036E51FD9FBFA001114FD /* NewsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRepository.swift; sourceTree = "<group>"; };
 		CB5723721FA24A11009747E1 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		CB5A0B431FA7587B009373D6 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CB5A0B451FA75AD7009373D6 /* WelcomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				CB5723721FA24A11009747E1 /* Repository.swift */,
 				CB5A0B511FA7782C009373D6 /* UserRepository.swift */,
 				CB6C99AA1FCC56BE00EE25C9 /* BaseRepository.swift */,
+				CB5036E51FD9FBFA001114FD /* NewsRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 				CBD104511F7572E400A48BCD /* CellInfo.swift */,
 				CB7134131F8283F500D0FF16 /* News.swift */,
 				CB5A0B531FA779C7009373D6 /* UserVK.swift */,
+				CB5036E31FD9EDB9001114FD /* InsertQuery.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -508,6 +514,7 @@
 				CBD104431F744D7400A48BCD /* StatusTableViewCell.swift in Sources */,
 				CB7134161F828AD200D0FF16 /* NoteViewController.swift in Sources */,
 				CBD104541F7575F000A48BCD /* MainInfo.swift in Sources */,
+				CB5036E61FD9FBFA001114FD /* NewsRepository.swift in Sources */,
 				CB5A0B521FA7782C009373D6 /* UserRepository.swift in Sources */,
 				CB5A0B481FA767A8009373D6 /* RegistrationViewController.swift in Sources */,
 				CB0EC5481FD75498001E6B6E /* DatabaseManager.swift in Sources */,
@@ -517,6 +524,7 @@
 				CBD1044B1F75633D00A48BCD /* ContactTableViewCell.swift in Sources */,
 				CB5A0B501FA77501009373D6 /* ShakeAnimation.swift in Sources */,
 				CB8489981F75ABB800D2FEE7 /* SchoolTableViewCell.swift in Sources */,
+				CB5036E41FD9EDB9001114FD /* InsertQuery.swift in Sources */,
 				CBD104521F7572E400A48BCD /* CellInfo.swift in Sources */,
 				CBD104611F75A4FA00A48BCD /* InstituteTableViewCell.swift in Sources */,
 				CBD104381F7439A200A48BCD /* DeclinationWord.swift in Sources */,

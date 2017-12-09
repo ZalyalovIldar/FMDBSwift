@@ -10,6 +10,15 @@ import UIKit
 
 class News: NSObject, Storable {
     
+    lazy var insertQuery: InsertQuery = {
+        var imageData = Data()
+        if let image = image, let createdImageData = UIImageJPEGRepresentation(image, 1) {
+            imageData = createdImageData
+        }
+        let insertSQL = "INSERT INTO news (\(BaseRepository.field_news_text), \(BaseRepository.field_news_image), \(BaseRepository.field_news_like_count), \(BaseRepository.field_news_comment_count), \(BaseRepository.field_news_repost_count), \(BaseRepository.field_user_id)) VALUES (?, ?, ?, ?, ?, ?);"
+        return InsertQuery(query: insertSQL, data: [text, imageData, likeCount, commentCount, respostCount, userID])
+    }()
+    
     @objc var id: Int
     @objc var text: String!
     @objc var image: UIImage?

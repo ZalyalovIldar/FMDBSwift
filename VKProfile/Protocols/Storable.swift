@@ -10,4 +10,5 @@ import Foundation
 
 protocol Storable: NSCoding {
     var id: Int { get set }
+    var insertQuery: InsertQuery { get }
 }
