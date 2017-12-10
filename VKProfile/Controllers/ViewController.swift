@@ -39,6 +39,7 @@ class ViewController: UITableViewController, CreateNewsDelegate, UICollectionVie
     let followersIdentifierSegue = "followersSegue"
     let createNewsIdentifierSegue = "createNewsSegue"
     let detailsNewsSegue = "detailsNewsSegue"
+    let registrationNvcIdentifier = "resgistrationNVC"
     
     let infoButtonsCellIdentefier = "infoButtonCell"
     let photoCellIdentefier = "photoCell"
@@ -214,7 +215,14 @@ class ViewController: UITableViewController, CreateNewsDelegate, UICollectionVie
     }
     
     @IBAction func onMoreClick(_ sender: UIBarButtonItem) {
-        present(MoreProfileAlert.getAlert(), animated: true, completion: nil)
+        let exit = "Выход"
+        let goOut = "Выйти?"
+        
+        let alert = UIAlertController(title: exit, message: goOut, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: exit, style: .destructive, handler: { [weak self] (_) in
+            self?.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
