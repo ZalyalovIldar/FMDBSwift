@@ -36,7 +36,7 @@ class BaseRepository: Repository {
     
     var databaseManager: DatabaseManager!
     
-    private let createUsersTableSQL = "CREATE TABLE users (\(field_user_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_user_name) TEXT NOT NULL, \(field_user_surname) TEXT NOT NULL, \(field_user_email) TEXT NOT NULL, \(field_user_phone_number) TEXT NOT NULL, \(field_user_age) INTEGER NOT NULL, \(field_user_city) TEXT NOT NULL, \(field_user_password) TEXT NOT NULL, CONSTRAINT email_unique UNIQUE (\(field_user_email)));"
+    private let createUsersTableSQL = "CREATE TABLE users (\(field_user_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_user_name) TEXT NOT NULL, \(field_user_surname) TEXT NOT NULL, \(field_user_email) TEXT NOT NULL, \(field_user_phone_number) TEXT NOT NULL, \(field_user_age) INTEGER NOT NULL, \(field_user_city) TEXT NOT NULL, \(field_user_password) TEXT NOT NULL, CONSTRAINT email_unique UNIQUE (\(field_user_email)), CONSTRAINT fk_user_id FOREIGN KEY (\(field_user_id)) REFERENCES users (\(field_user_id)) ON DELETE CASCADE);"
     private let createNewsTableSQL = "CREATE TABLE news (\(field_news_id) INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \(field_news_text) TEXT NOT NULL, \(field_news_image) BLOB, \(field_news_like_count) INTEGER NOT NULL, \(field_news_comment_count) INTEGER NOT NULL, \(field_news_repost_count) INTEGER NOT NULL, \(field_user_id) INTEGER NOT NULL);"
     private let selectAllNewsSQL = "SELECT * FROM news;"
     private let selectAllUsersSQL = "SELECT * FROM users;"
@@ -45,7 +45,7 @@ class BaseRepository: Repository {
     
     init() {
         databaseManager = DatabaseManager()
-        databaseManager.createDatabase(sql: [createNewsTableSQL, createUsersTableSQL])
+        databaseManager.createDatabase(sql: [createUsersTableSQL, createNewsTableSQL])
     }
     
     func syncSave<T>(with object: T) -> Bool where T : Storable {
