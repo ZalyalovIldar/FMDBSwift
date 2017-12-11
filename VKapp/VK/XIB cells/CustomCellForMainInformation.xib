@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="mainInformationCell" rowHeight="100" id="zZf-gF-KQi" customClass="MainInformationTableViewCell" customModule="VK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="68"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zZf-gF-KQi" id="5NL-I7-8xJ">
+                <rect key="frame" x="0.0" y="0.0" width="436" height="68"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N5q-T0-Wdr">
+                        <rect key="frame" x="11" y="11" width="420" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.68938228629999998" green="0.68938228629999998" blue="0.68938228629999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgz-0M-Xxx">
+                        <rect key="frame" x="11" y="34" width="414" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="N5q-T0-Wdr" firstAttribute="trailing" secondItem="5NL-I7-8xJ" secondAttribute="trailingMargin" constant="3" id="6RC-Ys-1vS"/>
+                    <constraint firstItem="Jgz-0M-Xxx" firstAttribute="leading" secondItem="5NL-I7-8xJ" secondAttribute="leadingMargin" constant="3" id="9aF-j6-NxR"/>
+                    <constraint firstItem="N5q-T0-Wdr" firstAttribute="leading" secondItem="5NL-I7-8xJ" secondAttribute="leadingMargin" constant="3" id="LQR-EI-G8L"/>
+                    <constraint firstItem="N5q-T0-Wdr" firstAttribute="top" secondItem="5NL-I7-8xJ" secondAttribute="topMargin" constant="3" id="lB3-UO-6hD"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Jgz-0M-Xxx" secondAttribute="trailing" constant="3" id="vq8-Cf-OSA"/>
+                    <constraint firstItem="Jgz-0M-Xxx" firstAttribute="top" secondItem="N5q-T0-Wdr" secondAttribute="bottom" constant="3" id="zHR-d5-f6d"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="rowFillingLabel" destination="Jgz-0M-Xxx" id="DIu-iU-OtU"/>
+                <outlet property="rowNameLabel" destination="N5q-T0-Wdr" id="1rB-54-s3P"/>
+            </connections>
+            <point key="canvasLocation" x="82" y="38"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="giftsCell" rowHeight="120" id="KGk-i7-Jjw" customClass="GiftsTableViewCell" customModule="VK" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="597" height="149"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="564" height="148.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6y0-uD-byi">
+                        <rect key="frame" x="3" y="3" width="558" height="30"/>
+                        <state key="normal">
+                            <attributedString key="attributedTitle">
+                                <fragment content="4 подарка">
+                                    <attributes>
+                                        <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <font key="NSFont" metaFont="system" size="15"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                        </state>
+                    </button>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HPC-9h-7WD">
+                        <rect key="frame" x="3" y="34" width="961" height="114.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6jO-MW-yC5">
+                            <size key="itemSize" width="100" height="70"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="HPC-9h-7WD" secondAttribute="trailing" constant="-400" id="A4a-2o-BYx"/>
+                    <constraint firstItem="HPC-9h-7WD" firstAttribute="top" secondItem="6y0-uD-byi" secondAttribute="bottom" constant="1" id="AGG-5d-JHj"/>
+                    <constraint firstAttribute="bottom" secondItem="HPC-9h-7WD" secondAttribute="bottom" id="GEm-e1-LUy"/>
+                    <constraint firstItem="6y0-uD-byi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="X2h-YM-XMC"/>
+                    <constraint firstAttribute="trailing" secondItem="6y0-uD-byi" secondAttribute="trailing" constant="3" id="ZNd-Ic-G7e"/>
+                    <constraint firstItem="6y0-uD-byi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="3" id="gBf-o8-hPv"/>
+                    <constraint firstItem="HPC-9h-7WD" firstAttribute="leading" secondItem="6y0-uD-byi" secondAttribute="leading" id="pJT-iX-5lv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="giftsCollectionView" destination="HPC-9h-7WD" id="kgQ-Ro-Fsf"/>
+                <outlet property="giftsCountButton" destination="6y0-uD-byi" id="bQC-Sq-EJ5"/>
+            </connections>
+            <point key="canvasLocation" x="238.5" y="111.5"/>
+        </tableViewCell>
+    </objects>
+</document>

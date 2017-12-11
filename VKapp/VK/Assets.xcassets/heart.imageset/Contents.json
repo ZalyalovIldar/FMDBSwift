@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "f0a75babe34ee6a7662452f70c424da5--heart-shapes-weheartit.jpg",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "f0a75babe34ee6a7662452f70c424da5--heart-shapes-weheartit-1.jpg",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "f0a75babe34ee6a7662452f70c424da5--heart-shapes-weheartit-2.jpg",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
